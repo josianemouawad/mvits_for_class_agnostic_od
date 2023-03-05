@@ -3,6 +3,10 @@ import math
 import torch
 from torch import nn, Tensor
 from torch.nn.init import xavier_uniform_, constant_, normal_
+import sys
+sys.path.insert(1,'/content/mvits_for_class_agnostic_od')
+sys.path.insert(1,'/content/mvits_for_class_agnostic_od/models')
+sys.path.insert(1,'/content/mvits_for_class_agnostic_od/models/ops')
 from models.ops.modules import MSDeformAttn
 from transformers import RobertaModel, RobertaTokenizerFast
 from models.deformable_modules import DeformableTransformerEncoderLayer, DeformableTransformerEncoder, \

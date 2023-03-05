@@ -23,7 +23,8 @@ class SaveTxtFormat(SavePredictions):
                 boxes, scores = self.predictions[image_name]
                 for b, c in zip(boxes, scores):
                     # class_id, score, x1, y1, x2, y2
-                    f.write(f"{0} {c} {int(b[0])} {int(b[1])} {int(b[2])} {int(b[3])}\n")
+                    if c>0.7:
+                        f.write(f"{0} {c} {int(b[0])} {int(b[1])} {int(b[2])} {int(b[3])}\n")
 
 
 class SavePKLFormat(SavePredictions):

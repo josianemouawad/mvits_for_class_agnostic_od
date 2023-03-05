@@ -2,7 +2,7 @@ import os
 import argparse
 from tqdm import tqdm
 from models.model import Model
-from inference.save_predictions import SavePKLFormat
+from inference.save_predictions import SavePKLFormat,SaveTxtFormat
 
 
 def parse_arguments():
@@ -29,7 +29,7 @@ def parse_arguments():
 
 def run_inference(model, images_dir, output_path, caption=None, multi_crop=False):
     images = os.listdir(images_dir)
-    dumper = SavePKLFormat()
+    dumper = SaveTxtFormat()
     detections = {}
     for i, image_name in enumerate(tqdm(images)):
         if i > 0 and i % 500 == 0:  # Checkpoints after every 500 iterations
@@ -58,7 +58,7 @@ def main():
     output_dir = f"{os.path.dirname(images_dir)}/{model_name}"
     os.makedirs(output_dir, exist_ok=True)
     if model_name in ['mdef_detr']:
-        output_path = f"{output_dir}/{'_'.join(text_query.split(' '))}.pkl"
+        output_path = f"{output_dir}/{'_'.join(text_query.split(' '))}"
     else:
         output_path = f"{output_dir}/{model_name}.pkl"
     run_inference(model, images_dir, output_path, caption=text_query, multi_crop=multi_crop)
