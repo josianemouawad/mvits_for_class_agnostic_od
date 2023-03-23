@@ -21,7 +21,8 @@ def parse_arguments():
                     help="The text query to be used in case of MViTs.")
     ap.add_argument("--multi_crop", action='store_true', help="Either to perform multi-crop inference or not. "
                                                               "Multi-crop inference is used only for DOTA dataset.")
-
+    ap.add_argument("-output", required=True, default=None,
+                    help="The path to results")
     args = vars(ap.parse_args())
 
     return args
@@ -54,8 +55,9 @@ def main():
     checkpoints_path = args["model_checkpoints_path"]
     text_query = args["text_query"]
     multi_crop = args["multi_crop"]
+    output_dir = args["output"]
     model = Model(model_name, checkpoints_path).get_model()
-    output_dir = f"{os.path.dirname(images_dir)}/{model_name}"
+    
     os.makedirs(output_dir, exist_ok=True)
     if model_name in ['mdef_detr']:
         output_path = f"{output_dir}/{'_'.join(text_query.split(' '))}"
